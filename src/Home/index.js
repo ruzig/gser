@@ -22,14 +22,21 @@ const userListing = map(user => (
 
 const Home = ({ fetchUser, users }) => (
   <div>
-    <input
-      type="button"
-      value="Tap me"
-      onClick={() => fetchUser()}
-    />
-    <div>
-      {users && userListing(users)}
-    </div>
+    {
+      users.length > 0 ?
+      <div>
+        <h3>Top devs in Singapore</h3>
+        { userListing(users) }
+      </div>
+        :
+      <div style={{ textAlign: 'center' }}>
+        <h3>We're planing a surprise</h3>
+        <div
+          className="fetch-button"
+          onClick={() => fetchUser()}
+        >Tap me</div>
+      </div>
+    }
   </div>
 );
 
