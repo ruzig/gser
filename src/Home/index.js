@@ -8,6 +8,7 @@ import {
 } from './state';
 
 import './index.css';
+import Pagination from './Pagination';
 
 const userListing = map(user => (
   <div className="line" key={user.id}>
@@ -37,6 +38,7 @@ const Home = ({ fetchUser, users }) => (
         >Tap me</div>
       </div>
     }
+    <Pagination />
   </div>
 );
 
