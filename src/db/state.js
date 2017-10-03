@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
 import { Observable } from 'rxjs';
 import { createAction, handleActions } from 'redux-actions';
+import { path } from 'lodash/fp';
 
-import { pouchChange$, normalizeItem } from './utils';
+import { pouchChange$, normalizeItem, normalizeItems } from './utils';
+import { addUserIdAction, addUserIdsAction } from '../Home/state';
+
+export const dbUsersSelector = path('database.users');
 
 export const ADD_USER = 'db/addUser';
 export const ADD_USERS = 'db/addUsers';
@@ -25,14 +29,20 @@ const reducer = combineReducers({
 export const allUserEpic = (action$, _store, { getDB }) => (
   Observable.fromPromise(getDB().allDocs({ include_docs: true }))
     .pluck('rows')
-    .map(rows => rows.map(row => normalizeItem(row.doc)))
-    .map(users => addUsersAction(users))
+    .map(rows => rows.map(row => row.doc))
+    .switchMap(users => [
+      addUsersAction(normalizeItems(users)),
+      addUserIdsAction(users.map(u => u._id)),
+    ])
 );
 
 export const userChangeEpic = (action$, _store, { getDB }) => (
   pouchChange$(getDB())
     .pluck('doc')
-    .map(profile => addUserAction(profile))
+    .switchMap(profile => [
+      addUserAction(profile),
+      addUserIdAction(profile._id),
+    ])
 );
 
 export default { database: reducer };
