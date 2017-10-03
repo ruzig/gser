@@ -1,9 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Home = () => (
+import { fetchGithubUserAction } from './state';
+
+const Home = ({ fetchUser }) => (
   <div>
-    <input type="button" value="Tap me" />
+    <input
+      type="button"
+      value="Tap me"
+      onClick={() => fetchUser()}
+    />
   </div>
 );
 
-export default Home;
+const enhance = connect(
+  null,
+  {
+    fetchUser: fetchGithubUserAction,
+  }
+);
+
+export default enhance(Home);
