@@ -1,0 +1,12 @@
+.avatar {
+  height: 48px;
+  width: 48px;
+  margin-right: 20px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: solid 1px lightgray;
+}

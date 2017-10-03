@@ -12,6 +12,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-observable": "^0.16.0",
+    "reselect": "^3.0.1",
     "rx-dom": "^7.0.3",
     "rxjs": "^5.4.3"
   },

@@ -1,7 +1,18 @@
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { Observable } from 'rxjs';
-import { map, toString } from 'lodash/fp';
+import { map, toString, path } from 'lodash/fp';
+import { createSelector } from 'reselect';
+
+import { dbUsersSelector } from '../db/state';
+
+const userIdsSelector = path('home.userIds');
+
+export const usersSelector = createSelector(
+  dbUsersSelector, 
+  userIdsSelector,
+  (users, ids) => ids.map(id => users[id])
+)
 
 const FETCH_GITHUB_USER = "Home/FETCH_GITHUB_USER";
 const NOTIFY_MESSAGE = "Home/NOTIFY_MESSAGE";
