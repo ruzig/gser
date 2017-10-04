@@ -6,8 +6,6 @@ import { createSelector } from 'reselect';
 
 import { dbUsersSelector } from '../db/state';
 
-const userIdsSelector = path('home.userIds');
-
 export const usersSelector = createSelector(
   dbUsersSelector, 
   userIdsSelector,
@@ -16,21 +14,16 @@ export const usersSelector = createSelector(
 
 const FETCH_GITHUB_USER = "Home/FETCH_GITHUB_USER";
 const NOTIFY_MESSAGE = "Home/NOTIFY_MESSAGE";
-const ADD_USER_ID = "Home/ADD_USER_ID";
-const ADD_USER_IDS = "Home/ADD_USER_IDS";
 
 export const fetchGithubUserAction = createAction(FETCH_GITHUB_USER);
 export const notifyMessage = createAction(NOTIFY_MESSAGE);
-export const addUserIdAction = createAction(ADD_USER_ID);
-export const addUserIdsAction = createAction(ADD_USER_IDS);
 
-const userIds = handleActions({
-  [ADD_USER_ID] : (state, { payload }) => [...state, payload],
-  [ADD_USER_IDS] : (state, { payload }) => [...state, ...payload],
-}, []);
+const message = handleActions({
+  [NOTIFY_MESSAGE] : (state, { payload }) => payload
+}, null);
 
 const reducer = combineReducers({
-  userIds,
+  message,
 });
 
 const ghSearchBase = "https://api.github.com/search/users?q=";
