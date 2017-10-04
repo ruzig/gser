@@ -3,6 +3,7 @@
 # Overview
 
 Video: https://www.youtube.com/watch?v=j88ulMscd1g
+Website: https://gser-cf9f7.firebaseapp.com/
 
 This repo is a demo for writing [offline-first](http://offlinefirst.org/) app powered by React/Redux, PouchDB and RxJS. The React/Redux is using for building UI. All data from Redux is synching from PouchDB via RxJS. So, the UI is just only talking to the caches, local database(PouchDB). When PouchDB database changes, RxJS triggers change Redux and React UI will automatically change.
 
