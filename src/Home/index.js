@@ -5,6 +5,7 @@ import { map } from 'lodash/fp';
 import {
   fetchGithubUserAction,
   usersSelector,
+  isEmptyUserSelector,
 } from './state';
 
 import './index.css';
@@ -21,21 +22,20 @@ const userListing = map(user => (
   </div>
 ));
 
-const Home = ({ fetchUserWithPage, users }) => (
+const Home = ({ fetchUserWithPage, users, isEmptyUser }) => (
   <div>
     {
-      users.length > 0 ?
-      <div>
-        <h3>Top devs in Singapore</h3>
-        { userListing(users) }
-      </div>
-        :
+      isEmptyUser ?
       <div style={{ textAlign: 'center' }}>
         <h3>We're planing a surprise</h3>
         <div
           className="fetch-button"
           onClick={() => fetchUserWithPage(1)}
         >Tap me</div>
+      </div> :
+      <div>
+        <h3>Top devs in Singapore</h3>
+        { userListing(users) }
       </div>
     }
     <Pagination fetcher={fetchUserWithPage}/>
@@ -45,6 +45,7 @@ const Home = ({ fetchUserWithPage, users }) => (
 const enhance = connect(
   state => ({
     users: usersSelector(state),
+    isEmptyUser: isEmptyUserSelector(state),
   }),
   {
     fetchUserWithPage: fetchGithubUserAction,

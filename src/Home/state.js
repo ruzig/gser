@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { Observable } from 'rxjs';
-import { map, toString, path } from 'lodash/fp';
+import { map, toString, path, isEmpty } from 'lodash/fp';
 import { createSelector } from 'reselect';
 
 import {
@@ -10,6 +10,7 @@ import {
 } from '../db/state';
 
 const currentPageSelector = path('home.currentPage');
+export const isEmptyUserSelector = createSelector(dbUsersSelector, isEmpty);
 
 export const usersSelector = createSelector(
   dbUsersSelector, 
