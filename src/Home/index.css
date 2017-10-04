@@ -39,10 +39,14 @@
   padding-right: 15px;
 }
 
+.pagination li a {
+	display: block;
+	width: 44px;
+	height: 44px;
+}
+
 .pagination li {
   display: inline-block;
-  width: 44px;
-  height: 44px;
   line-height: 44px;
   text-align: center;
   cursor: pointer;
