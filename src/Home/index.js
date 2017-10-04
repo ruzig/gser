@@ -23,7 +23,7 @@ const userListing = map(user => (
   </div>
 ));
 
-const Home = ({ fetchUserWithPage, users, isEmptyUser }) => (
+export const PureHome = ({ fetchUserWithPage, users, isEmptyUser }) => (
   <div>
     <Notification />
     {
@@ -54,4 +54,4 @@ const enhance = connect(
   }
 );
 
-export default enhance(Home);
+export default enhance(PureHome);
