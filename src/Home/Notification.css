@@ -9,15 +9,17 @@
 
 @keyframes cssAnimation {
   to {
-      width:0;
-      height:0;
-      overflow:hidden;
+    width:0;
+    height:0;
+    padding: 0;
+    overflow:hidden;
   }
 }
 @-webkit-keyframes cssAnimation {
   to {
-      width:0;
-      height:0;
-      visibility:hidden;
+    width:0;
+    height:0;
+    padding: 0;
+    visibility:hidden;
   }
 }
