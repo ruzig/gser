@@ -10,6 +10,7 @@ import {
 
 import './index.css';
 import Pagination from './Pagination';
+import Notification from './Notification';
 
 const userListing = map(user => (
   <div className="line" key={user.id}>
@@ -24,6 +25,7 @@ const userListing = map(user => (
 
 const Home = ({ fetchUserWithPage, users, isEmptyUser }) => (
   <div>
+    <Notification />
     {
       isEmptyUser ?
       <div style={{ textAlign: 'center' }}>

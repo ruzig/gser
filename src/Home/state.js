@@ -10,6 +10,7 @@ import {
 } from '../db/state';
 
 const currentPageSelector = path('home.currentPage');
+export const messageSelector = path('home.message');
 export const isEmptyUserSelector = createSelector(dbUsersSelector, isEmpty);
 export const totalItemsSelector = createSelector(dbPaginationSelector, path('total_items.count'));
 
@@ -76,12 +77,12 @@ export const fetchUserEpic = (action$, _store, { get, getDB }) => (
         }))
         .map(_ => notifyMessageAction({
           message: "Fetch Github User Successfully",
-          success: true,
+          error: false,
         }))
       .catch(error => Observable.of(notifyMessageAction({
-        message: "Can not fetch github users",
-        success: false,
-        error,
+        message: "Something went wrong",
+        error: true,
+        data: error,
       })))
 		)
 );
