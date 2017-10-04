@@ -14,4 +14,10 @@ This is a data flow for a request:
 
 <img src="https://cdn.filestackcontent.com/qxTWxGcdQEOKyGTYpJch" width="600">
 
+### Features:
+- Fetch Github user
+- Pagination display.
+- Error displaying when some thing went wrong.
+- Limit 1000 results bases on Github limits.
+- All data is saved to local database -> Can use without internet.
 
