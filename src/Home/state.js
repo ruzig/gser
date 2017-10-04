@@ -11,6 +11,7 @@ import {
 
 const currentPageSelector = path('home.currentPage');
 export const isEmptyUserSelector = createSelector(dbUsersSelector, isEmpty);
+export const totalItemsSelector = createSelector(dbPaginationSelector, path('total_items.count'));
 
 export const usersSelector = createSelector(
   dbUsersSelector, 
