@@ -1,9 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 
 import './index.css';
+import {
+  updatePageAction,
+} from './state';
 
-const Pagination = ({ pageCount, fetcher }) => (
+const Pagination = ({ pageCount, fetcher, updatePage }) => (
   <div>
     <ReactPaginate
       pageCount={pageCount}
@@ -14,9 +18,16 @@ const Pagination = ({ pageCount, fetcher }) => (
       nextLabel="next"
       subContainerClassName={"pages pagination"}
       activeClassName={"active"}
-      onPageChange={data => fetcher(data.selected + 1)}
+      onPageChange={data => (updatePage(data.selected + 1), fetcher(data.selected + 1))}
     />
   </div>
 );
 
-export default Pagination;
+const enhance = connect(
+  null,
+  {
+    updatePage: updatePageAction,
+  }
+);
+
+export default enhance(Pagination);

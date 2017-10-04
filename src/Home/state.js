@@ -4,25 +4,43 @@ import { Observable } from 'rxjs';
 import { map, toString, path } from 'lodash/fp';
 import { createSelector } from 'reselect';
 
-import { dbUsersSelector } from '../db/state';
+import {
+  dbUsersSelector,
+  dbPaginationSelector,
+} from '../db/state';
+
+const currentPageSelector = path('home.currentPage');
 
 export const usersSelector = createSelector(
   dbUsersSelector, 
-  userIdsSelector,
-  (users, ids) => ids.map(id => users[id])
+  dbPaginationSelector,
+  currentPageSelector,
+  (users, pagination, page) => {
+    if (pagination[page]) {
+      return pagination[page].userIds.map(id => users[id]);
+    }
+    return [];
+  }
 )
 
 const FETCH_GITHUB_USER = "Home/FETCH_GITHUB_USER";
 const NOTIFY_MESSAGE = "Home/NOTIFY_MESSAGE";
+const UPDATE_PAGE = "Home/UPDATE_PAGE";
 
 export const fetchGithubUserAction = createAction(FETCH_GITHUB_USER);
-export const notifyMessage = createAction(NOTIFY_MESSAGE);
+export const notifyMessageAction = createAction(NOTIFY_MESSAGE);
+export const updatePageAction = createAction(UPDATE_PAGE);
 
 const message = handleActions({
   [NOTIFY_MESSAGE] : (state, { payload }) => payload
 }, null);
 
+const currentPage = handleActions({
+  [UPDATE_PAGE] : (state, { payload }) => payload
+}, 1);
+
 const reducer = combineReducers({
+  currentPage,
   message,
 });
 
@@ -54,11 +72,11 @@ export const fetchUserEpic = (action$, _store, { get, getDB }) => (
           table: "paginations",
           userIds: items.map(item => item.id),
         }))
-        .map(_ => notifyMessage({
+        .map(_ => notifyMessageAction({
           message: "Fetch Github User Successfully",
           success: true,
         }))
-      .catch(error => Observable.of(notifyMessage({
+      .catch(error => Observable.of(notifyMessageAction({
         message: "Can not fetch github users",
         success: false,
         error,

@@ -16,6 +16,7 @@ import {
 } from './pagination';
 
 export const dbUsersSelector = path('database.users');
+export const dbPaginationSelector = path('database.pagination');
 
 const reducer = combineReducers({
   users,
