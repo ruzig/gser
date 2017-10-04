@@ -38,9 +38,9 @@ const Home = ({ fetchUserWithPage, users, isEmptyUser }) => (
       <div>
         <h3>Top devs in Singapore</h3>
         { userListing(users) }
+        <Pagination fetcher={fetchUserWithPage}/>
       </div>
     }
-    <Pagination fetcher={fetchUserWithPage}/>
   </div>
 );
 
