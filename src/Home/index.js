@@ -21,7 +21,7 @@ const userListing = map(user => (
   </div>
 ));
 
-const Home = ({ fetchUser, users }) => (
+const Home = ({ fetchUserWithPage, users }) => (
   <div>
     {
       users.length > 0 ?
@@ -34,11 +34,11 @@ const Home = ({ fetchUser, users }) => (
         <h3>We're planing a surprise</h3>
         <div
           className="fetch-button"
-          onClick={() => fetchUser()}
+          onClick={() => fetchUserWithPage(1)}
         >Tap me</div>
       </div>
     }
-    <Pagination />
+    <Pagination fetcher={fetchUserWithPage}/>
   </div>
 );
 
@@ -47,7 +47,7 @@ const enhance = connect(
     users: usersSelector(state),
   }),
   {
-    fetchUser: fetchGithubUserAction,
+    fetchUserWithPage: fetchGithubUserAction,
   }
 );
 

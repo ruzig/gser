@@ -34,21 +34,28 @@ const reducer = combineReducers({
 });
 
 const ghSearchBase = "https://api.github.com/search/users?q=";
-const singaporeSearchUrl = `${ghSearchBase}location:singapore`;
+const singaporeSearchUrl = "location:singapore";
+const searchUrl = page => `${ghSearchBase}${singaporeSearchUrl}&page=${page}`;
 
-const pouchFormatter = map(profile => ({
+const userFormatter = map(profile => ({
   _id: toString(profile.id),
+  type: "users",
   ...profile,
 }));
 
 export const fetchUserEpic = (action$, _store, { get, getDB }) => (
   action$
     .ofType(FETCH_GITHUB_USER)
-		.switchMap(_action =>
-      get(singaporeSearchUrl)
+		.switchMap(({ page }) =>
+      get(searchUrl(page))
         .pluck('response') 
+        .do(res => getDB().put({
+          _id: "total_items",
+          type: "paginations",
+          count: res.total_count,
+        }))
         .map(res => res.items)
-        .do(items => getDB().bulkDocs(pouchFormatter(items)))
+        .do(items => getDB().bulkDocs(userFormatter(items)))
         .map(_ => notifyMessage({
           message: "Fetch Github User Successfully",
           success: true,

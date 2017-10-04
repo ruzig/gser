@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 
 import './index.css';
 
-const Pagination = ({ pageCount }) => (
+const Pagination = ({ pageCount, fetcher }) => (
   <div>
     <ReactPaginate
       pageCount={pageCount}
@@ -14,6 +14,7 @@ const Pagination = ({ pageCount }) => (
       nextLabel="next"
       subContainerClassName={"pages pagination"}
       activeClassName={"active"}
+      onPageChange={data => fetcher(data.selected + 1)}
     />
   </div>
 );

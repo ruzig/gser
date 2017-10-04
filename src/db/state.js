@@ -10,10 +10,13 @@ import {
   addUserAction,
 } from './users';
 
+import { pagination } from './pagination';
+
 export const dbUsersSelector = path('database.users');
 
 const reducer = combineReducers({
   users,
+  pagination,
 });
 
 export const allUserEpic = (action$, _store, { getDB }) => (
