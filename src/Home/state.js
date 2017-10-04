@@ -46,7 +46,7 @@ const userFormatter = map(profile => ({
 export const fetchUserEpic = (action$, _store, { get, getDB }) => (
   action$
     .ofType(FETCH_GITHUB_USER)
-		.switchMap(({ page }) =>
+		.switchMap(({ payload: page }) =>
       get(searchUrl(page))
         .pluck('response') 
         .do(res => getDB().put({
@@ -56,6 +56,11 @@ export const fetchUserEpic = (action$, _store, { get, getDB }) => (
         }))
         .map(res => res.items)
         .do(items => getDB().bulkDocs(userFormatter(items)))
+        .do(items => getDB().put({
+          _id: toString(page),
+          type: "paginations",
+          userIds: items.map(item => item.id),
+        }))
         .map(_ => notifyMessage({
           message: "Fetch Github User Successfully",
           success: true,
