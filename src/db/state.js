@@ -1,26 +1,16 @@
 import { combineReducers } from 'redux';
 import { Observable } from 'rxjs';
-import { createAction, handleActions } from 'redux-actions';
 import { path } from 'lodash/fp';
 
-import { pouchChange$, normalizeItem, normalizeItems } from './utils';
+import { pouchChange$, normalizeItems } from './utils';
 import { addUserIdAction, addUserIdsAction } from '../Home/state';
+import {
+  users,
+  addUsersAction,
+  addUserAction,
+} from './users';
 
 export const dbUsersSelector = path('database.users');
-
-export const ADD_USER = 'db/addUser';
-export const ADD_USERS = 'db/addUsers';
-export const addUserAction = createAction(ADD_USER);
-export const addUsersAction = createAction(ADD_USERS);
-
-const users = handleActions({
-  [ADD_USER] : (state, { payload }) => ({
-    ...state, ...normalizeItem(payload)
-  }),
-  [ADD_USERS] : (state, { payload }) => ({
-    ...state, ...payload
-  }),
-}, {});
 
 const reducer = combineReducers({
   users,
