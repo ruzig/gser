@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { normalizeItem } from './utils';
+import { normalizeItem, normalizeItems } from './utils';
 
 export const ADD_USER = 'db/addUser';
 export const ADD_USERS = 'db/addUsers';
@@ -11,7 +11,7 @@ export const users = handleActions({
     ...state, ...normalizeItem(payload)
   }),
   [ADD_USERS] : (state, { payload }) => ({
-    ...state, ...payload
+    ...state, ...normalizeItems(payload)
   }),
 }, {});
 

@@ -39,7 +39,7 @@ const searchUrl = page => `${ghSearchBase}${singaporeSearchUrl}&page=${page}`;
 
 const userFormatter = map(profile => ({
   _id: toString(profile.id),
-  type: "users",
+  table: "users",
   ...profile,
 }));
 
@@ -51,14 +51,14 @@ export const fetchUserEpic = (action$, _store, { get, getDB }) => (
         .pluck('response') 
         .do(res => getDB().put({
           _id: "total_items",
-          type: "paginations",
+          table: "paginations",
           count: res.total_count,
         }))
         .map(res => res.items)
         .do(items => getDB().bulkDocs(userFormatter(items)))
         .do(items => getDB().put({
           _id: toString(page),
-          type: "paginations",
+          table: "paginations",
           userIds: items.map(item => item.id),
         }))
         .map(_ => notifyMessage({
