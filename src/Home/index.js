@@ -36,7 +36,7 @@ export const PureHome = ({ fetchUserWithPage, users, isEmptyUser }) => (
         >Tap me</div>
       </div> :
       <div>
-        <h3>Top devs in Singapore</h3>
+        <h3>Top devs</h3>
         { userListing(users) }
         <Pagination fetcher={fetchUserWithPage}/>
       </div>

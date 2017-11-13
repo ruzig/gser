@@ -48,8 +48,8 @@ const reducer = combineReducers({
 });
 
 const ghSearchBase = "https://api.github.com/search/users?q=";
-const singaporeSearchUrl = "location:singapore";
-const searchUrl = page => `${ghSearchBase}${singaporeSearchUrl}&page=${page}`;
+const vietnamSearchUrl = "location:vietnam";
+const searchUrl = page => `${ghSearchBase}${vietnamSearchUrl}&page=${page}`;
 
 const userFormatter = map(profile => ({
   _id: toString(profile.id),
